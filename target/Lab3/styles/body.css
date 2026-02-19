@@ -1,0 +1,10 @@
+body {
+    color: black;
+    text-underline-mode : #f286e2;
+    font-family: monospace;
+}
+
+
+::selection {
+
+}

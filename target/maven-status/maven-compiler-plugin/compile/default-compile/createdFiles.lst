@@ -1,0 +1,13 @@
+com\senechka\lab3\utils\Bounds.class
+com\senechka\lab3\beans\ClientBean.class
+com\senechka\lab3\mbeans\MissPercentageMBean.class
+com\senechka\lab3\mbeans\PointsCounterMBean.class
+com\senechka\lab3\beans\Service.class
+com\senechka\lab3\utils\CoordinatesValidation.class
+com\senechka\lab3\utils\MBeanRegistrationUtil.class
+com\senechka\lab3\db\DataBaseController.class
+com\senechka\lab3\beans\Coordinates.class
+com\senechka\lab3\db\HitResult.class
+com\senechka\lab3\utils\AreaCheck.class
+com\senechka\lab3\mbeans\MissPercentage.class
+com\senechka\lab3\mbeans\PointsCounter.class

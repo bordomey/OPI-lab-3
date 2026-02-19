@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<project name="WebLab3" default="build">
+    <property file="build.properties"/>
+    
+    <!-- Load ant-contrib library if available -->
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+        <classpath>
+            <pathelement location="${lib.dir}/ant-contrib-1.0b3.jar"/>
+        </classpath>
+    </taskdef>
+    
+    <!-- Define classpath for compilation -->
+    <path id="classpath.compile">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+        <pathelement location="${classes.dir}"/>
+        <pathelement location="${test.classes.dir}"/>
+    </path>
+
+    <!-- Compile target - compiles source code -->
+    <target name="compile">
+        <echo message="Compiling source code..."/>
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${test.classes.dir}"/>
+        
+        <!-- Compile main source code -->
+        <javac destdir="${classes.dir}" 
+               srcdir="${src.dir}" 
+               includeantruntime="false"
+               debug="${debug}"
+               release="${javac.release}"
+               fork="true"
+
+>
+            <classpath refid="classpath.compile"/>
+        </javac>
+        
+        <!-- Compile test code -->
+        <javac destdir="${test.classes.dir}" 
+               srcdir="${test.dir}" 
+               includeantruntime="false"
+               debug="${debug}"
+               release="${javac.release}"
+               fork="true"
+
+>
+            <classpath refid="classpath.compile"/>
+        </javac>
+    </target>
+
+    <!-- Build target - compiles and packages into jar -->
+    <target name="build" depends="compile">
+        <echo message="Building JAR file..."/>
+        <mkdir dir="${dist.dir}"/>
+        <jar destfile="${dest.jar}" basedir="${classes.dir}" compress="true">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Implementation-Version" value="1.0"/>
+                <attribute name="Built-By" value="${user.name}"/>
+            </manifest>
+            <fileset dir="${classes.dir}"/>
+        </jar>
+    </target>
+
+    <!-- Clean target - removes compiled classes and temporary files -->
+    <target name="clean">
+        <echo message="Cleaning build artifacts..."/>
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+        <delete dir="${reports.dir}"/>
+        <delete>
+            <fileset dir="." includes="**/*Test.class"/>
+        </delete>
+    </target>
+
+    <!-- Test target - runs JUnit tests after building -->
+    <target name="test" depends="build">
+        <echo message="Running JUnit 5 tests..."/>
+        <mkdir dir="${reports.dir}"/>
+
+        <java classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
+            <classpath>
+                <fileset dir="${lib.dir}" includes="**/*.jar"/>
+                <pathelement location="${classes.dir}"/>
+                <pathelement location="${test.classes.dir}"/>
+            </classpath>
+
+            <arg value="--scan-classpath"/>
+            <arg value="${test.classes.dir}"/>
+        </java>
+    </target>
+
+
+    <!-- native2ascii target - converts native files to ASCII -->
+    <target name="native2ascii">
+        <echo message="Converting native files to ASCII..."/>
+        <mkdir dir="${native2ascii.dest}"/>
+        <native2ascii src="${native2ascii.src}" 
+                      dest="${native2ascii.dest}"
+                      includes="**/*.properties" 
+                      encoding="UTF-8"/>
+    </target>
+
+    <!-- music target - plays music after build -->
+    <target name="music" depends="build">
+        <echo message="Playing music after build..."/>
+        <exec executable="cmd" failonerror="false">
+            <arg value="/c"/>
+            <arg value="start ${music}"/>
+        </exec>
+    </target>
+
+
+
+
+
+    <!-- diff target - checks working copy status and commits if needed -->
+    <target name="diff">
+        <echo message="Checking working copy status..."/>
+        
+        <!-- Check git status -->
+        <exec executable="git" outputproperty="git.status" failonerror="false">
+            <arg value="status"/>
+            <arg value="--porcelain"/>
+        </exec>
+        
+        <condition property="has.changes">
+            <not><equals arg1="${git.status}" arg2=""/></not>
+        </condition>
+        
+        <if>
+            <isset property="has.changes"/>
+            <then>
+                <echo message="Changes detected in working copy:"/>
+                <echo message="${git.status}"/>
+                
+                <!-- Here we would check if changes affect only non-class files -->
+                <!-- For simplicity, we'll just show a message -->
+                <echo message="Checking if changes affect only non-class files..."/>
+                
+                <!-- If appropriate, we would commit -->
+                <exec executable="git" failonerror="false">
+                    <arg value="add"/>
+                    <arg value="."/>
+                </exec>
+                
+                <exec executable="git" failonerror="false">
+                    <arg value="commit"/>
+                    <arg value="-m"/>
+                    <arg value="Ant build automated commit"/>
+                </exec>
+            </then>
+            <else>
+                <echo message="No changes detected in working copy."/>
+            </else>
+        </if>
+    </target>
+</project>

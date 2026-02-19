@@ -1,0 +1,13 @@
+D:\OPI3\Web-lab3-main_0.1\src\main\java\com\senechka\lab3\beans\ClientBean.java
+D:\OPI3\Web-lab3-main_0.1\src\main\java\com\senechka\lab3\beans\Coordinates.java
+D:\OPI3\Web-lab3-main_0.1\src\main\java\com\senechka\lab3\beans\Service.java
+D:\OPI3\Web-lab3-main_0.1\src\main\java\com\senechka\lab3\db\DataBaseController.java
+D:\OPI3\Web-lab3-main_0.1\src\main\java\com\senechka\lab3\db\HitResult.java
+D:\OPI3\Web-lab3-main_0.1\src\main\java\com\senechka\lab3\mbeans\MissPercentage.java
+D:\OPI3\Web-lab3-main_0.1\src\main\java\com\senechka\lab3\mbeans\MissPercentageMBean.java
+D:\OPI3\Web-lab3-main_0.1\src\main\java\com\senechka\lab3\mbeans\PointsCounter.java
+D:\OPI3\Web-lab3-main_0.1\src\main\java\com\senechka\lab3\mbeans\PointsCounterMBean.java
+D:\OPI3\Web-lab3-main_0.1\src\main\java\com\senechka\lab3\utils\AreaCheck.java
+D:\OPI3\Web-lab3-main_0.1\src\main\java\com\senechka\lab3\utils\Bounds.java
+D:\OPI3\Web-lab3-main_0.1\src\main\java\com\senechka\lab3\utils\CoordinatesValidation.java
+D:\OPI3\Web-lab3-main_0.1\src\main\java\com\senechka\lab3\utils\MBeanRegistrationUtil.java
