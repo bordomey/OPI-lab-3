@@ -2,27 +2,22 @@
 <project name="WebLab3" default="build">
     <property file="build.properties"/>
     
-    <!-- Load ant-contrib library if available -->
     <taskdef resource="net/sf/antcontrib/antlib.xml">
         <classpath>
             <pathelement location="${lib.dir}/ant-contrib-1.0b3.jar"/>
         </classpath>
     </taskdef>
     
-    <!-- Define classpath for compilation -->
     <path id="classpath.compile">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
         <pathelement location="${classes.dir}"/>
         <pathelement location="${test.classes.dir}"/>
     </path>
 
-    <!-- Compile target - compiles source code -->
     <target name="compile">
         <echo message="Compiling source code..."/>
         <mkdir dir="${classes.dir}"/>
         <mkdir dir="${test.classes.dir}"/>
-        
-        <!-- Compile main source code -->
         <javac destdir="${classes.dir}" 
                srcdir="${src.dir}" 
                includeantruntime="false"
@@ -32,9 +27,8 @@
 
 >
             <classpath refid="classpath.compile"/>
-        </javac>
+        </javac>    
         
-        <!-- Compile test code -->
         <javac destdir="${test.classes.dir}" 
                srcdir="${test.dir}" 
                includeantruntime="false"
@@ -47,7 +41,6 @@
         </javac>
     </target>
 
-    <!-- Build target - compiles and packages into jar -->
     <target name="build" depends="compile">
         <echo message="Building JAR file..."/>
         <mkdir dir="${dist.dir}"/>
@@ -61,7 +54,6 @@
         </jar>
     </target>
 
-    <!-- Clean target - removes compiled classes and temporary files -->
     <target name="clean">
         <echo message="Cleaning build artifacts..."/>
         <delete dir="${build.dir}"/>
@@ -72,7 +64,6 @@
         </delete>
     </target>
 
-    <!-- Test target - runs JUnit tests after building -->
     <target name="test" depends="build">
         <echo message="Running JUnit 5 tests..."/>
         <mkdir dir="${reports.dir}"/>
@@ -89,8 +80,6 @@
         </java>
     </target>
 
-
-    <!-- native2ascii target - converts native files to ASCII -->
     <target name="native2ascii">
         <echo message="Converting native files to ASCII..."/>
         <mkdir dir="${native2ascii.dest}"/>
@@ -100,7 +89,6 @@
                       encoding="UTF-8"/>
     </target>
 
-    <!-- music target - plays music after build -->
     <target name="music" depends="build">
         <echo message="Playing music after build..."/>
         <exec executable="cmd" failonerror="false">
@@ -113,11 +101,9 @@
 
 
 
-    <!-- diff target - checks working copy status and commits if needed -->
     <target name="diff">
         <echo message="Checking working copy status..."/>
         
-        <!-- Check git status -->
         <exec executable="git" outputproperty="git.status" failonerror="false">
             <arg value="status"/>
             <arg value="--porcelain"/>
@@ -133,11 +119,8 @@
                 <echo message="Changes detected in working copy:"/>
                 <echo message="${git.status}"/>
                 
-                <!-- Here we would check if changes affect only non-class files -->
-                <!-- For simplicity, we'll just show a message -->
                 <echo message="Checking if changes affect only non-class files..."/>
                 
-                <!-- If appropriate, we would commit -->
                 <exec executable="git" failonerror="false">
                     <arg value="add"/>
                     <arg value="."/>
@@ -160,7 +143,6 @@
 
     <mkdir dir="C:/study/OPI3/svn-team-build"/>
 
-    <!-- Ревизия 1 -->
     <echo>Checking out revision 1...</echo>
     <exec executable="svn">
         <arg value="checkout"/>
@@ -172,7 +154,6 @@
     <echo>Building revision 1...</echo>
     <ant antfile="C:/study/OPI3/svn-team-build/1/build.xml" target="build"/>
 
-    <!-- Ревизия 2 -->
     <echo>Checking out revision 2...</echo>
     <exec executable="svn">
         <arg value="checkout"/>
@@ -184,7 +165,6 @@
     <echo>Building revision 2...</echo>
     <ant antfile="C:/study/OPI3/svn-team-build/2/build.xml" target="build"/>
 
-    <!-- Ревизия 3 -->
     <echo>Checking out revision 3...</echo>
     <exec executable="svn">
         <arg value="checkout"/>
@@ -196,7 +176,6 @@
     <echo>Building revision 3...</echo>
     <ant antfile="C:/study/OPI3/svn-team-build/3/build.xml" target="build"/>
 
-    <!-- Ревизия 4 -->
     <echo>Checking out revision 4...</echo>
     <exec executable="svn">
         <arg value="checkout"/>
@@ -208,13 +187,12 @@
     <echo>Building revision 4...</echo>
     <ant antfile="C:/study/OPI3/svn-team-build/4/build.xml" target="build"/>
 
-    <!-- Упаковываем все JAR в ZIP -->
-    <echo>Creating ZIP archive of all JARs...</echo>
+    <echo>Creating ZIP...</echo>
     <zip destfile="C:/study/OPI3/team_build.zip">
         <fileset dir="C:/study/OPI3/svn-team-build" includes="**/dist/*.jar"/>
     </zip>
 
-    <echo>Team build finished. Archive: C:/study/OPI3/team_build.zip</echo>
+    <echo>Team build finished.C:/study/OPI3/team_build.zip</echo>
 </target>
 
     
