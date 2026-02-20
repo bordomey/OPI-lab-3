@@ -154,4 +154,68 @@
             </else>
         </if>
     </target>
+
+<target name="team" description="Build 4 previous SVN revisions and zip jars">
+    <echo>Starting team build...</echo>
+
+    <mkdir dir="C:/study/OPI3/svn-team-build"/>
+
+    <!-- Ревизия 1 -->
+    <echo>Checking out revision 1...</echo>
+    <exec executable="svn">
+        <arg value="checkout"/>
+        <arg value="file:///C:/study/OPI3/svn-repo"/>
+        <arg value="C:/study/OPI3/svn-team-build/1"/>
+        <arg value="-r"/>
+        <arg value="5"/>
+    </exec>
+    <echo>Building revision 1...</echo>
+    <ant antfile="C:/study/OPI3/svn-team-build/1/build.xml" target="build"/>
+
+    <!-- Ревизия 2 -->
+    <echo>Checking out revision 2...</echo>
+    <exec executable="svn">
+        <arg value="checkout"/>
+        <arg value="file:///C:/study/OPI3/svn-repo"/>
+        <arg value="C:/study/OPI3/svn-team-build/2"/>
+        <arg value="-r"/>
+        <arg value="6"/>
+    </exec>
+    <echo>Building revision 2...</echo>
+    <ant antfile="C:/study/OPI3/svn-team-build/2/build.xml" target="build"/>
+
+    <!-- Ревизия 3 -->
+    <echo>Checking out revision 3...</echo>
+    <exec executable="svn">
+        <arg value="checkout"/>
+        <arg value="file:///C:/study/OPI3/svn-repo"/>
+        <arg value="C:/study/OPI3/svn-team-build/3"/>
+        <arg value="-r"/>
+        <arg value="7"/>
+    </exec>
+    <echo>Building revision 3...</echo>
+    <ant antfile="C:/study/OPI3/svn-team-build/3/build.xml" target="build"/>
+
+    <!-- Ревизия 4 -->
+    <echo>Checking out revision 4...</echo>
+    <exec executable="svn">
+        <arg value="checkout"/>
+        <arg value="file:///C:/study/OPI3/svn-repo"/>
+        <arg value="C:/study/OPI3/svn-team-build/4"/>
+        <arg value="-r"/>
+        <arg value="8"/>
+    </exec>
+    <echo>Building revision 4...</echo>
+    <ant antfile="C:/study/OPI3/svn-team-build/4/build.xml" target="build"/>
+
+    <!-- Упаковываем все JAR в ZIP -->
+    <echo>Creating ZIP archive of all JARs...</echo>
+    <zip destfile="C:/study/OPI3/team_build.zip">
+        <fileset dir="C:/study/OPI3/svn-team-build" includes="**/dist/*.jar"/>
+    </zip>
+
+    <echo>Team build finished. Archive: C:/study/OPI3/team_build.zip</echo>
+</target>
+
+    
 </project>
